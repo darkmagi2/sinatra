@@ -6,7 +6,7 @@ This is a basic shot counter using Sinatra as the web front end and mysql as the
 
 I made this as a silly way to track how many shots are owned in my circle of friends. It started as a simple HTML page and has evolved into something bigger. This project is primarily for my own education has doesn't have many reasonable applications anywhere else (yet!)
 
-##To-Do 
+## To-Do 
 
 There are a few things I would like to add and/or change about this project including:
 
