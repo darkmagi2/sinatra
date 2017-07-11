@@ -11,8 +11,11 @@ I made this as a silly way to track how many shots are owned in my circle of fri
 There are a few things I would like to add and/or change about this project including:
 
 -Make it pretty (Maybe some CSS and Javascript?)
+
 -Make it more powerful (Why just increment shots when I can subtract them as well?)
+
 -API? What if I could use API's to increment shots from other sources such as Discord?
+
 ## Contributors
 
 Just me right now, feel free to pull and improve if you see something dumb!
