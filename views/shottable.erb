@@ -1,0 +1,12 @@
+<html>
+  <head>
+    <title>Shots!</title>
+  </head>
+  <body>
+	  <h1>Current Shots owed:</h1>
+	  <% @names.each{|x| %>
+		  <%= x[0] %> owes <%= x[1] %> shots <br> 
+	  <% } %>
+
+  </body>
+</html>
