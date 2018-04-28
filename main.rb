@@ -2,7 +2,7 @@ $LOAD_PATH.unshift("#{File.dirname(__FILE__)}/")
 require 'rubygems' if RUBY_VERSION < "1.9"
 require 'sinatra' 
 require 'mysql2'
-require 'cfg/db.rb'
+require '/var/data/cfg/db.rb'
 
 #Define MYSQL Client variable
 @@client = Mysql2::Client.new(:host => @config["db_host"], :username => @config["db_user"], :password => @config["db_pass"], :database => 'shotcount')
@@ -19,9 +19,38 @@ not_found do
 end
 
 #Begin Shotcount routes
+
+#Index (enter name for tracking)
+
 get '/shots' do
 	erb :entername
 end
+
+#Testing
+
+get '/test' do
+#	@names = @@client.query("SELECT * FROM people").each(:as => :array)
+#	@names = @@client.query("SELECT * FROM people").map{|result| { result["name"] => result["shots"] } }
+	@names = @@client.query("SELECT * FROM people").map{|result| [ result["name"], result["shots"] ] }
+	erb :shottable
+#	names = @@client.query("SELECT * FROM people").each(:as => :array)
+#	"#{names[0]}"
+#	"#{names[1]}"
+
+#	names.each do |x, y, z| 
+#		puts x 
+#	end
+#	for i in names 
+#		"#{names[i]}"	
+#	end
+
+#	for i in names.first["name"] do
+#		"#{i}"
+#		"Shotboard: #{names.first["name"].capitalize}:#{names.first["shots"]}"
+#	end
+end
+
+#Post
 post '/shots' do
 	erb :shots, :locals => {:name => params[:ename]}
 end
