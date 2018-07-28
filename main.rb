@@ -23,6 +23,11 @@ end
 #Index (enter name for tracking)
 
 get '/shots' do
+	#erb :entername
+	@names = @@client.query("SELECT * FROM people").map{|result| [ result["name"], result["shots"] ] }
+	erb :shottable
+end
+get '/add' do
 	erb :entername
 end
 

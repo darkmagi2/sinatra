@@ -1,12 +1,45 @@
 <html>
-  <head>
-    <title>Shots!</title>
-  </head>
-  <body>
-	  <h1>Current Shots owed:</h1>
-	  <% @names.each{|x| %>
-		  <%= x[0] %> owes <%= x[1] %> shots <br> 
-	  <% } %>
+<head>
+<style>
+#shots {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-  </body>
+#shots td, #shots th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+#shots tr:nth-child(even){background-color: #f2f2f2;}
+
+#shots tr:hover {background-color: #ddd;}
+
+#shots th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+}
+</style>
+ <body>
+	 <table style="width:50%"id="shots" >
+	 	<tr>
+	 	<th>Name</th>
+	 	<th>Shots Owed</th>
+         	</tr>
+	  	<% @names.each{|x| %>	
+			<tr> <td><a href="./shots/<%= x[0] %>" style="display:block;"><%= x[0].capitalize %>  </td> <td><%= x[1] %> shots</td></tr> 
+	  	<% } %>
+		<tr>
+			<th><a href="./add">Add a name to track</th>
+		<th>Delete a name</th>
+		</tr>
+	  </table>
+ </body>
 </html>
