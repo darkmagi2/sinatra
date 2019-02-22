@@ -3,6 +3,14 @@ require 'rubygems' if RUBY_VERSION < "1.9"
 require 'sinatra' 
 require 'mysql2'
 require '/var/data/cfg/db.rb'
+require 'rack/throttle'
+require 'shotgun'
+
+#use Rack::Throttle::Daily,    :max => 1000  # requests
+#use Rack::Throttle::Hourly,   :max => 100   # requests
+#use Rack::Throttle::Minute,   :max => 120    # requests
+use Rack::Throttle::Second,   :max => 1     # requests
+use Rack::Throttle::Interval, :min => 0.5   # seconds
 
 #Define MYSQL Client variable
 @@client = Mysql2::Client.new(:host => @config["db_host"], :username => @config["db_user"], :password => @config["db_pass"], :database => 'shotcount')
