@@ -10,7 +10,7 @@ I made this as a silly way to track how many shots are owned in my circle of fri
 
 There are a few things I would like to add and/or change about this project including:
 
--Make it pretty (Maybe some CSS and Javascript?)
+~~-Make it pretty (Maybe some CSS and Javascript?)~~ Done!
 
 -Make it more powerful (Why just increment shots when I can subtract them as well?)
 
