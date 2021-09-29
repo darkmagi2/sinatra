@@ -4,7 +4,7 @@ This is a basic shot counter using Sinatra as the web front end and mysql as the
 
 ## Motivation
 
-I made this as a silly way to track how many shots are owned in my circle of friends. It started as a simple HTML page and has evolved into something bigger. This project is primarily for my own education has doesn't have many reasonable applications anywhere else (yet!)
+I made this as a silly way to track how many shots are owned in my circle of friends. It started as a simple HTML page and has evolved into something bigger. This project is primarily for my own education and doesn't have many reasonable applications anywhere else (yet!)
 
 ## To-Do 
 
