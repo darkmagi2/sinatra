@@ -10,4 +10,4 @@
 ### END INIT INFO
 
 cd /var/www/sinatra
-shotgun >>/var/log//sinatra/sinatra.log 2>&1
+rackup >>/var/log/sinatra/sinatra.log 2>&1
