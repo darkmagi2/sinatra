@@ -13,7 +13,7 @@ use Rack::Throttle::Second,   :max => 1     # requests
 use Rack::Throttle::Interval, :min => 0.5   # seconds
 
 #Define MYSQL Client variable
-@@client = Mysql2::Client.new(:host => @config["db_host"], :username => @config["db_user"], :password => @config["db_pass"], :database => 'shotcount')
+$client = Mysql2::Client.new(:host => @config["db_host"], :username => @config["db_user"], :password => @config["db_pass"], :database => 'shotcount')
 
 #Haproxy makes this irrelevant
 get '/' do
@@ -31,36 +31,11 @@ end
 #Index (enter name for tracking)
 
 get '/shots' do
-	#erb :entername
-	@names = @@client.query("SELECT * FROM people").map{|result| [ result["name"], result["shots"] ] }
+	@names = $client.query("SELECT * FROM people").map{|result| [ result["name"], result["shots"] ] }
 	erb :shottable
 end
 get '/add' do
 	erb :entername
-end
-
-#Testing
-
-get '/test' do
-#	@names = @@client.query("SELECT * FROM people").each(:as => :array)
-#	@names = @@client.query("SELECT * FROM people").map{|result| { result["name"] => result["shots"] } }
-	@names = @@client.query("SELECT * FROM people").map{|result| [ result["name"], result["shots"] ] }
-	erb :shottable
-#	names = @@client.query("SELECT * FROM people").each(:as => :array)
-#	"#{names[0]}"
-#	"#{names[1]}"
-
-#	names.each do |x, y, z| 
-#		puts x 
-#	end
-#	for i in names 
-#		"#{names[i]}"	
-#	end
-
-#	for i in names.first["name"] do
-#		"#{i}"
-#		"Shotboard: #{names.first["name"].capitalize}:#{names.first["shots"]}"
-#	end
 end
 
 #Post
@@ -76,15 +51,15 @@ post '/shots/:name' do
 	#Convert entered name into name minus special characters
 	realname = params[:name].downcase.gsub(regex,'') 
 	#Check if name exists in database
-	exists = @@client.query("SELECT * FROM people WHERE name='#{realname}'")
+	exists = $client.query("SELECT * FROM people WHERE name='#{realname}'")
 	#If name doesn't exists, insert into database with shot count of 0
 	if exists.count == 0
-		@@client.query("INSERT INTO  people (name, shots) VALUES ('#{realname}', 0)")
+		$client.query("INSERT INTO  people (name, shots) VALUES ('#{realname}', 0)")
 	end
 	#Increment shotcount of entered name
-	@@client.query("UPDATE people SET shots=shots+1 WHERE name='#{realname}'")
+	$client.query("UPDATE people SET shots=shots+1 WHERE name='#{realname}'")
 	#Query database for name/shotcount of entered name and output results
-	results = @@client.query("SELECT * FROM people WHERE name='#{realname}'")
+	results = $client.query("SELECT * FROM people WHERE name='#{realname}'")
 	"#{results.first["name"].capitalize} has #{results.first["shots"]} shots owed." 
 end
 
