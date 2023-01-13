@@ -9,8 +9,41 @@ require 'shotgun'
 #use Rack::Throttle::Daily,    :max => 1000  # requests
 #use Rack::Throttle::Hourly,   :max => 100   # requests
 #use Rack::Throttle::Minute,   :max => 120    # requests
-use Rack::Throttle::Second,   :max => 1     # requests
-use Rack::Throttle::Interval, :min => 0.5   # seconds
+#use Rack::Throttle::Second,   :max => 2     # requests
+#use Rack::Throttle::Interval, :min => 0.5   # seconds
+
+#Experimental authentication
+use Rack::Session::Pool
+
+helpers do
+  def logged? ; session["isLogdIn"] == true; end
+#  def protected! ; halt 401 unless logged? ; end
+  def protected!
+    unless logged?
+      throw(:halt, [401, "Oops... we need your login"])
+    end
+  end
+end
+
+get "/login/?" do
+  erb :login
+end
+
+post '/login/?' do
+  if params['password'] == "password"
+    session["isLogdIn"] = true
+    redirect '/testlock'
+  else
+    halt 401
+  end
+end
+
+get('/logout/?'){ session["isLogdIn"] = false ; redirect '/login' }
+
+get '/testlock' do
+  protected!
+  erb :locked
+end
 
 #Define MYSQL Client variable
 $client = Mysql2::Client.new(:host => @config["db_host"], :username => @config["db_user"], :password => @config["db_pass"], :database => 'shotcount')
